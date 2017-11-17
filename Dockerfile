@@ -9,10 +9,9 @@ RUN apt-get update && \
     libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev libgeotiff-epsg libgdal1-dev \
     libmapnik-dev mapnik-utils python-mapnik npm nodejs-legacy && \
     npm install -g carto && \
-    mkdir ~/src && cd ~/src  && \
-    git clone git://github.com/SomeoneElseOSM/mod_tile.git && \
-    cd mod_tile && \
-    ./autogen.sh && make && make install && make install-mod_tile && ldconfig && \
+    mkdir ~/src && cd ~/src && git clone git://github.com/SomeoneElseOSM/mod_tile.git && \
+    cd mod_tile && ./autogen.sh && ./configure && make && \
+    make install && make install-mod_tile && ldconfig && \
     cd ~/src && \
     git clone git://github.com/gravitystorm/openstreetmap-carto.git && \
     cd openstreetmap-carto && \
