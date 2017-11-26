@@ -9,6 +9,20 @@ RUN apt-get update && \
     libagg-dev liblua5.2-dev ttf-unifont lua5.1 liblua5.1-dev libgeotiff-epsg libgdal1-dev \
     libmapnik-dev mapnik-utils python-mapnik npm nodejs-legacy fonts-noto-cjk fonts-noto-hinted \
     fonts-noto-unhinted ttf-unifont && \
-    mkdir ~/src && cd ~/src && git clone git://github.com/SomeoneElseOSM/mod_tile.git && \
+    mkdir /src && cd /src && git clone git://github.com/SomeoneElseOSM/mod_tile.git && \
     cd mod_tile && ./autogen.sh && ./configure && make && \
     make install && make install-mod_tile && ldconfig && \
+    cd /src && \
+    git clone git://github.com/gravitystorm/openstreetmap-carto.git && \
+    cd openstreetmap-carto && npm install -g carto && \
+    scripts/get-shapefiles.py -s && carto project.mml > mapnik.xml && \
+    mkdir /var/lib/mod_tile && \
+    mkdir /var/run/renderd
+
+ADD renderd.conf /usr/local/etc/renderd.conf
+ADD mod_tile.conf /etc/apache2/conf-available/mod_tile.conf
+ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN a2enconf mod_tile
+
+EXPOSE 8080
