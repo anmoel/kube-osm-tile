@@ -25,9 +25,9 @@ ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enconf mod_tile
 
-ENV PG_HOST=pgset-primary \
-    PG_PORT=5432 \
-    PG_USER=renderaccount \
-    PG_PASSWORD=password
+ENV PGHOST=pgset \
+    PGPORT=5432 \
+    PGUSER=osm \
+    PGPASSWORD=password
 
 EXPOSE 8080
