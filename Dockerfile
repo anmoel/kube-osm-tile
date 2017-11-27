@@ -11,7 +11,7 @@ RUN apt-get update && \
     fonts-noto-unhinted ttf-unifont && \
     mkdir /src && cd /src && git clone git://github.com/SomeoneElseOSM/mod_tile.git && \
     cd mod_tile && ./autogen.sh && ./configure && make && \
-    make install && make install-mod_tile && ldconfig && a2enconf mod_tile && \
+    make install && make install-mod_tile && ldconfig && \
     cd /src && \
     git clone git://github.com/gravitystorm/openstreetmap-carto.git && \
     cd openstreetmap-carto && npm install -g carto && \
@@ -23,6 +23,8 @@ ADD renderd.conf /usr/local/etc/renderd.conf
 ADD mod_tile.conf /etc/apache2/conf-available/mod_tile.conf
 ADD 000-default.conf /etc/apache2/sites-available/000-default.conf
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+RUN a2enconf mod_tile
 
 ENV PGHOST=pgset \
     PGPORT=5432 \
